@@ -6,8 +6,8 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "prisma:migrate": "npx prisma migrate dev --schema ./src/common/databases/prisma",
-    "prisma:generate": "npx prisma generate --schema ./src/common/databases/prisma",
+    "prisma:migrate": "npx prisma migrate dev --schema ./src/common/database/prisma/schema.prisma",
+    "prisma:generate": "npx prisma generate --schema ./src/common/database/prisma/schema.prisma",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",

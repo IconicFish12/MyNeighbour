@@ -6,15 +6,228 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  
 }
 
 // Enum Types
 
+enum Role {
+  RESIDENT
+  ADMIN
+  PROPERTY_MANAGER
+  TECHNICIAN
+  SECURITY
+}
+
+// Enum untuk status unit properti
+enum UnitStatus {
+  OCCUPIED
+  VACANT
+  MAINTENANCE
+}
+
+// Enum untuk status pembayaran
+enum PaymentStatus {
+  PAID
+  PENDING
+  OVERDUE
+  CANCELLED
+}
+
+// Enum untuk metode pembayaran
+enum PaymentMethod {
+  BANK_TRANSFER
+  E_WALLET
+  CREDIT_CARD
+  CASH
+}
+
+// Enum untuk prioritas permintaan perbaikan
+enum MaintenancePriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+// Enum untuk status permintaan perbaikan
+enum MaintenanceStatus {
+  NEW
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+// Enum untuk status pemesanan fasilitas
+enum BookingStatus {
+  CONFIRMED
+  CANCELLED
+  PENDING
+}
 
 // Models
 
-// model User {
+// =========================================================
+// RESIDENT MANAGEMENT SCHEMA
+// =========================================================
 
-// }
+model User {
+  id           String   @id @default(uuid()) @db.Uuid
+  username     String   @unique
+  email        String   @unique
+  passwordHash String
+  role         Role
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
+  // Relasi
+  resident            Resident?
+  maintenanceRequests MaintenanceRequest[]
+  bookings            Booking[]
+  payments            Payment[]
+  announcements       Announcement[]
+}
+
+model Resident {
+  id                     String    @id @default(uuid()) @db.Uuid
+  firstName              String
+  lastName               String
+  dateOfBirth            DateTime?
+  contactNumber          String?
+  emergencyContactName   String?
+  emergencyContactNumber String?
+  movedInDate            DateTime
+  movedOutDate           DateTime?
+
+  // Relasi
+  userId              String               @unique @db.Uuid
+  user                User                 @relation(fields: [userId], references: [id])
+  unitId              String               @db.Uuid
+  unit                Unit                 @relation(fields: [unitId], references: [id])
+  maintenanceRequests MaintenanceRequest[]
+  bookings            Booking[]
+  payments            Payment[]
+  Lease               Lease[]
+}
+
+model MaintenanceRequest {
+  id          String              @id @default(uuid()) @db.Uuid
+  title       String
+  description String
+  requestDate DateTime            @default(now())
+  priority    MaintenancePriority
+  status      MaintenanceStatus
+
+  // Relasi
+  residentId       String   @db.Uuid
+  resident         Resident @relation(fields: [residentId], references: [id])
+  unitId           String   @db.Uuid
+  unit             Unit     @relation(fields: [unitId], references: [id])
+  assignedToUserId String?  @db.Uuid
+  assignedTo       User?    @relation(fields: [assignedToUserId], references: [id])
+}
+
+model Payment {
+  id            String        @id @default(uuid()) @db.Uuid
+  amount        Float
+  paymentDate   DateTime      @default(now())
+  paymentMethod PaymentMethod
+  status        PaymentStatus
+  paymentFor    String // e.g., 'rent', 'utilities', 'fine'
+  description   String?
+
+  // Relasi
+  residentId        String   @db.Uuid
+  resident          Resident @relation(fields: [residentId], references: [id])
+  unitId            String?  @db.Uuid
+  unit              Unit?    @relation(fields: [unitId], references: [id])
+  leaseId           String?  @db.Uuid
+  lease             Lease?   @relation(fields: [leaseId], references: [id])
+  processedByUserId String?  @db.Uuid
+  processedBy       User?    @relation(fields: [processedByUserId], references: [id])
+}
+
+model Amenity {
+  id              String  @id @default(uuid()) @db.Uuid
+  name            String
+  description     String
+  bookingRequired Boolean @default(true)
+  status          String // e.g., 'available', 'under maintenance'
+
+  // Relasi
+  bookings Booking[]
+}
+
+model Booking {
+  id          String        @id @default(uuid()) @db.Uuid
+  bookingDate DateTime
+  startTime   DateTime
+  endTime     DateTime
+  status      BookingStatus
+
+  // Relasi
+  residentId     String   @db.Uuid
+  resident       Resident @relation(fields: [residentId], references: [id])
+  amenityId      String   @db.Uuid
+  amenity        Amenity  @relation(fields: [amenityId], references: [id])
+  bookedByUserId String   @db.Uuid
+  bookedBy       User     @relation(fields: [bookedByUserId], references: [id])
+}
+
+model Announcement {
+  id          String    @id @default(uuid()) @db.Uuid
+  title       String
+  content     String
+  publishDate DateTime  @default(now())
+  expiryDate  DateTime?
+  audience    String? // e.g., 'all residents', 'building A'
+
+  // Relasi
+  authorId String @db.Uuid
+  author   User   @relation(fields: [authorId], references: [id])
+}
+
+// =========================================================
+// HOUSING MANAGEMENT SCHEMA
+// =========================================================
+
+model Unit {
+  id                String     @id @default(uuid()) @db.Uuid
+  unitNumber        String     @unique
+  buildingName      String?
+  floorNumber       Int?
+  numberOfBedrooms  Int?
+  numberOfBathrooms Int?
+  squareFootage     Int?
+  rentAmount        Float?
+  status            UnitStatus
+
+  // Relasi
+  residents           Resident[]
+  maintenanceRequests MaintenanceRequest[]
+  payments            Payment[]
+  leases              Lease[]
+}
+
+model Lease {
+  id                 String   @id @default(uuid()) @db.Uuid
+  startDate          DateTime
+  endDate            DateTime
+  monthlyRent        Float
+  depositAmount      Float?
+  termsAndConditions String?
+
+  // Relasi
+  residentId String    @db.Uuid
+  resident   Resident? @relation(fields: [residentId], references: [id])
+  unitId     String    @unique @db.Uuid
+  unit       Unit      @relation(fields: [unitId], references: [id])
+  payments   Payment[]
+}
+
+model Contact {
+  id          String  @id @default(uuid()) @db.Uuid
+  name        String
+  role        String // e.g., 'Emergency Services', 'Property Manager', 'Security'
+  phoneNumber String
+  email       String?
+}
