@@ -7,9 +7,9 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { PaymentsManageService } from './payments-manage.service';
-import { CreatePaymentsManageDto } from '../../dtos/requests/create/create-payments-manage.dto';
-import { UpdatePaymentsManageDto } from '../../dtos/requests/update/update-payments-manage.dto';
+import { PaymentsManageService } from '../payments-module/payments-manage.service';
+import { CreatePaymentsManageDto } from '../../../dtos/requests/create/create-payments-manage.dto';
+import { UpdatePaymentsManageDto } from '../../../dtos/requests/update/update-payments-manage.dto';
 
 @Controller()
 export class PaymentsManageController {
