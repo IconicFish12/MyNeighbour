@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { CreateForumCommentManageDto } from 'src/dtos/requests/create/create-forum-comment-manage.dto';
-import { UpdateForumCommentManageDto } from 'src/dtos/requests/update/update-forum-comment-manage.dto';
+import { CreateForumCommentManageDto } from '../../../dtos/requests/create/create-forum-comment-manage.dto';
+import { UpdateForumCommentManageDto } from '../../../dtos/requests/update/update-forum-comment-manage.dto';
 
 @Injectable()
 export class ForumCommentManageService {
-  create(createForumCommentManageDto: CreateForumCommentManageDto) {
+  create(createRequest: CreateForumCommentManageDto) {
     return 'This action adds a new forumCommentManage';
   }
 
@@ -12,15 +12,15 @@ export class ForumCommentManageService {
     return `This action returns all forumCommentManage`;
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} forumCommentManage`;
   }
 
-  update(id: number, updateForumCommentManageDto: UpdateForumCommentManageDto) {
+  update(id: string, updateRequest: UpdateForumCommentManageDto) {
     return `This action updates a #${id} forumCommentManage`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} forumCommentManage`;
   }
 }

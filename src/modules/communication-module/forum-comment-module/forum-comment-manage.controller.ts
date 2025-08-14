@@ -8,8 +8,8 @@ import {
   Delete,
 } from '@nestjs/common';
 import { ForumCommentManageService } from './forum-comment-manage.service';
-import { CreateForumCommentManageDto } from 'src/dtos/requests/create/create-forum-comment-manage.dto';
-import { UpdateForumCommentManageDto } from 'src/dtos/requests/update/update-forum-comment-manage.dto';
+import { CreateForumCommentManageDto } from '../../../dtos/requests/create/create-forum-comment-manage.dto';
+import { UpdateForumCommentManageDto } from '../../../dtos/requests/update/update-forum-comment-manage.dto';
 
 @Controller()
 export class ForumCommentManageController {
@@ -29,7 +29,7 @@ export class ForumCommentManageController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.forumCommentManageService.findOne(+id);
+    return this.forumCommentManageService.findOne(id);
   }
 
   @Patch(':id')
@@ -38,13 +38,13 @@ export class ForumCommentManageController {
     @Body() updateForumCommentManageDto: UpdateForumCommentManageDto,
   ) {
     return this.forumCommentManageService.update(
-      +id,
+      id,
       updateForumCommentManageDto,
     );
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.forumCommentManageService.remove(+id);
+    return this.forumCommentManageService.remove(id);
   }
 }

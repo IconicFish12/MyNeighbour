@@ -8,8 +8,8 @@ import {
   Delete,
 } from '@nestjs/common';
 import { EmployeeManageService } from './employee-manage.service';
-import { CreateEmployeeManageDto } from 'src/dtos/requests/create/create-employee-manage.dto';
-import { UpdateEmployeeManageDto } from 'src/dtos/requests/update/update-employee-manage.dto';
+import { CreateEmployeeManageDto } from '../../../dtos/requests/create/create-employee-manage.dto';
+import { UpdateEmployeeManageDto } from '../../../dtos/requests/update/update-employee-manage.dto';
 
 @Controller()
 export class EmployeeManageController {
@@ -27,7 +27,7 @@ export class EmployeeManageController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.employeeManageService.findOne(+id);
+    return this.employeeManageService.findOne(id);
   }
 
   @Patch(':id')
@@ -35,11 +35,11 @@ export class EmployeeManageController {
     @Param('id') id: string,
     @Body() updateEmployeeManageDto: UpdateEmployeeManageDto,
   ) {
-    return this.employeeManageService.update(+id, updateEmployeeManageDto);
+    return this.employeeManageService.update(id, updateEmployeeManageDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.employeeManageService.remove(+id);
+    return this.employeeManageService.remove(id);
   }
 }

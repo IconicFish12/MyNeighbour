@@ -8,8 +8,8 @@ import {
   Delete,
 } from '@nestjs/common';
 import { UnitManageService } from './unit-manage.service';
-import { CreateUnitManageDto } from 'src/dtos/requests/create/create-unit-manage.dto';
-import { UpdateUnitManageDto } from 'src/dtos/requests/update/update-unit-manage.dto';
+import { CreateUnitManageDto } from '../../dtos/requests/create/create-unit-manage.dto';
+import { UpdateUnitManageDto } from '../../dtos/requests/update/update-unit-manage.dto';
 
 @Controller()
 export class UnitManageController {
@@ -27,7 +27,7 @@ export class UnitManageController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.unitManageService.findOne(+id);
+    return this.unitManageService.findOne(id);
   }
 
   @Patch(':id')
@@ -35,11 +35,11 @@ export class UnitManageController {
     @Param('id') id: string,
     @Body() updateUnitManageDto: UpdateUnitManageDto,
   ) {
-    return this.unitManageService.update(+id, updateUnitManageDto);
+    return this.unitManageService.update(id, updateUnitManageDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.unitManageService.remove(+id);
+    return this.unitManageService.remove(id);
   }
 }

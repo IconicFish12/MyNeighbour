@@ -8,8 +8,8 @@ import {
   Delete,
 } from '@nestjs/common';
 import { ComplaintManageService } from './complaint-manage.service';
-import { CreateComplaintManageDto } from 'src/dtos/requests/create/create-complaint-manage.dto';
-import { UpdateComplaintManageDto } from 'src/dtos/requests/update/update-complaint-manage.dto';
+import { CreateComplaintManageDto } from '../../dtos/requests/create/create-complaint-manage.dto';
+import { UpdateComplaintManageDto } from '../../dtos/requests/update/update-complaint-manage.dto';
 
 @Controller()
 export class ComplaintManageController {
@@ -29,7 +29,7 @@ export class ComplaintManageController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.complaintManageService.findOne(+id);
+    return this.complaintManageService.findOne(id);
   }
 
   @Patch(':id')
@@ -37,11 +37,11 @@ export class ComplaintManageController {
     @Param('id') id: string,
     @Body() updateComplaintManageDto: UpdateComplaintManageDto,
   ) {
-    return this.complaintManageService.update(+id, updateComplaintManageDto);
+    return this.complaintManageService.update(id, updateComplaintManageDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.complaintManageService.remove(+id);
+    return this.complaintManageService.remove(id);
   }
 }
