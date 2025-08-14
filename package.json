@@ -6,6 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "serve": "npx prisma migrate dev --schema ./src/common/database/prisma/schema.prisma && nest build",
     "prisma:migrate": "npx prisma migrate dev --schema ./src/common/database/prisma/schema.prisma",
     "prisma:generate": "npx prisma generate --schema ./src/common/database/prisma/schema.prisma",
     "build": "nest build",
