@@ -10,6 +10,7 @@
     "prisma:migrate": "npx prisma migrate dev --schema ./src/common/database/prisma/schema.prisma",
     "prisma:generate": "npx prisma generate --schema ./src/common/database/prisma/schema.prisma",
     "build": "nest build",
+    "start:prod": "node dist/main"
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -88,3 +89,4 @@
     "testEnvironment": "node"
   }
 }
+
