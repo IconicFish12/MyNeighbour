@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUnitManageDto } from 'src/dtos/requests/create/create-unit-manage.dto';
-import { UpdateUnitManageDto } from 'src/dtos/requests/update/update-unit-manage.dto';
+import { CreateUnitManageDto } from '../../dtos/requests/create/create-unit-manage.dto';
+import { UpdateUnitManageDto } from '../../dtos/requests/update/update-unit-manage.dto';
 
 @Injectable()
 export class UnitManageService {
-  create(createUnitManageDto: CreateUnitManageDto) {
+  create(createRequest: CreateUnitManageDto) {
     return 'This action adds a new unitManage';
   }
 
@@ -12,15 +12,15 @@ export class UnitManageService {
     return `This action returns all unitManage`;
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} unitManage`;
   }
 
-  update(id: number, updateUnitManageDto: UpdateUnitManageDto) {
+  update(id: string, updateRequest: UpdateUnitManageDto) {
     return `This action updates a #${id} unitManage`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} unitManage`;
   }
 }

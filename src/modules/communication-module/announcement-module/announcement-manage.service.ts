@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { CreateAnnouncementManageDto } from 'src/dtos/requests/create/create-announcement-manage.dto';
-import { UpdateAnnouncementManageDto } from 'src/dtos/requests/update/update-announcement-manage.dto';
+import { CreateAnnouncementManageDto } from '../../../dtos/requests/create/create-announcement-manage.dto';
+import { UpdateAnnouncementManageDto } from '../../../dtos/requests/update/update-announcement-manage.dto';
 @Injectable()
 export class AnnouncementManageService {
-  create(createAnnouncementManageDto: CreateAnnouncementManageDto) {
+  create(createRequest: CreateAnnouncementManageDto) {
     return 'This action adds a new announcementManage';
   }
 
@@ -11,15 +11,15 @@ export class AnnouncementManageService {
     return `This action returns all announcementManage`;
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} announcementManage`;
   }
 
-  update(id: number, updateAnnouncementManageDto: UpdateAnnouncementManageDto) {
+  update(id: string, updateRequest: UpdateAnnouncementManageDto) {
     return `This action updates a #${id} announcementManage`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} announcementManage`;
   }
 }

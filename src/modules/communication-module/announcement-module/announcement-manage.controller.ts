@@ -8,8 +8,8 @@ import {
   Delete,
 } from '@nestjs/common';
 import { AnnouncementManageService } from './announcement-manage.service';
-import { CreateAnnouncementManageDto } from 'src/dtos/requests/create/create-announcement-manage.dto';
-import { UpdateAnnouncementManageDto } from 'src/dtos/requests/update/update-announcement-manage.dto';
+import { CreateAnnouncementManageDto } from '../../../dtos/requests/create/create-announcement-manage.dto';
+import { UpdateAnnouncementManageDto } from '../../../dtos/requests/update/update-announcement-manage.dto';
 
 @Controller()
 export class AnnouncementManageController {
@@ -29,7 +29,7 @@ export class AnnouncementManageController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.announcementManageService.findOne(+id);
+    return this.announcementManageService.findOne(id);
   }
 
   @Patch(':id')
@@ -38,13 +38,13 @@ export class AnnouncementManageController {
     @Body() updateAnnouncementManageDto: UpdateAnnouncementManageDto,
   ) {
     return this.announcementManageService.update(
-      +id,
+      id,
       updateAnnouncementManageDto,
     );
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.announcementManageService.remove(+id);
+    return this.announcementManageService.remove(id);
   }
 }

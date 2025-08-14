@@ -8,8 +8,8 @@ import {
   Delete,
 } from '@nestjs/common';
 import { ForumPostManageService } from './forum-post-manage.service';
-import { CreateForumPostManageDto } from 'src/dtos/requests/create/create-forum-post-manage.dto';
-import { UpdateForumPostManageDto } from 'src/dtos/requests/update/update-forum-post-manage.dto';
+import { CreateForumPostManageDto } from '../../../dtos/requests/create/create-forum-post-manage.dto';
+import { UpdateForumPostManageDto } from '../../../dtos/requests/update/update-forum-post-manage.dto';
 
 @Controller()
 export class ForumPostManageController {
@@ -29,7 +29,7 @@ export class ForumPostManageController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.forumPostManageService.findOne(+id);
+    return this.forumPostManageService.findOne(id);
   }
 
   @Patch(':id')
@@ -37,11 +37,11 @@ export class ForumPostManageController {
     @Param('id') id: string,
     @Body() updateForumPostManageDto: UpdateForumPostManageDto,
   ) {
-    return this.forumPostManageService.update(+id, updateForumPostManageDto);
+    return this.forumPostManageService.update(id, updateForumPostManageDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.forumPostManageService.remove(+id);
+    return this.forumPostManageService.remove(id);
   }
 }
