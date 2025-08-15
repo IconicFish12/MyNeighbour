@@ -9,7 +9,7 @@ import { CostumeValidationPipe } from './common/pipes/costume-validation.pipe';
 import { useContainer } from 'class-validator';
 import { AppModule } from './app.module';
 
-async function bootstrap() {
+export async function bootstrap() {
   const app = await NestFactory.create<INestApplication>(AppModule, {
     cors: true,
     bodyParser: true,
@@ -58,7 +58,7 @@ async function bootstrap() {
     new CostumeValidationPipe(),
   );
 
-  await app.listen(process.env.PORT ?? 3000);
+  await app.init();
   console.log(`HTTP Application is running on: ${await app.getUrl()}`);
 }
 void bootstrap();
