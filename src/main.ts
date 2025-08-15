@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { NestFactory } from '@nestjs/core';
 import {
   BadRequestException,
@@ -12,6 +11,7 @@ import { AppModule } from './app.module';
 
 export async function bootstrap() {
   const app = await NestFactory.create<INestApplication>(AppModule, {
+    logger: ['debug', 'error', 'log', 'verbose'],
     cors: true,
     bodyParser: true,
   });
@@ -54,7 +54,7 @@ export async function bootstrap() {
     new CostumeValidationPipe(),
   );
 
-  await app.init(); // Ganti listen dengan init()
-  return app.getHttpAdapter().getInstance();
+  await app.listen(process.env.BACKEND_PORT || 3000);
+  console.log(`Application Running in port ${process.env.BACKEND_PORT}`);
 }
 void bootstrap();
