@@ -3,9 +3,14 @@
   "collection": "@nestjs/schematics",
   "sourceRoot": "src",
   "compilerOptions": {
-    "assets": ["**/*.hbs", "public/**/*"],
+    "webpack": false,
     "watchAssets": true,
-    "deleteOutDir": true
+    "deleteOutDir": true,
+    "assets": [
+      {
+        "include": "common/database/generated/prisma",
+        "outDir": "dist/"
+      }
+    ]
   }
 }
-

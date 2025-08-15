@@ -18,10 +18,12 @@ import { CommunicationModule } from './modules/communication-module/communicatio
 import { AnnouncementManageModule } from './modules/communication-module/announcement-module/announcement-manage.module';
 import { ForumPostManageModule } from './modules/communication-module/forum-post-module/forum-post-manage.module';
 import { ForumCommentManageModule } from './modules/communication-module/forum-comment-module/forum-comment-manage.module';
+import { BackendApiModule } from './modules/backend-api.module';
 
 @Module({
   imports: [
     DatabaseModule,
+    BackendApiModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
@@ -29,6 +31,7 @@ import { ForumCommentManageModule } from './modules/communication-module/forum-c
     RouterModule.register([
       {
         path: 'api',
+        module: BackendApiModule,
         children: [
           {
             path: 'users',

@@ -1,5 +1,4 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import {
   BadRequestException,
   INestApplication,
@@ -8,6 +7,7 @@ import {
 } from '@nestjs/common';
 import { CostumeValidationPipe } from './common/pipes/costume-validation.pipe';
 import { useContainer } from 'class-validator';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create<INestApplication>(AppModule, {
