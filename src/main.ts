@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { NestFactory } from '@nestjs/core';
 import {
   BadRequestException,
@@ -19,7 +20,6 @@ export async function bootstrap() {
     fallbackOnErrors: true,
   });
 
-  // Validation Response Message
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -30,7 +30,6 @@ export async function bootstrap() {
           property: string;
           errors: string[];
         }
-
         const formatErrors = (errors: ValidationError[]): FormattedError[] => {
           const formattedErrors: FormattedError[] = [];
           for (const error of errors) {
@@ -46,19 +45,16 @@ export async function bootstrap() {
           }
           return formattedErrors;
         };
-
-        const formattedValidationErrors = formatErrors(validationErrors);
-
         return new BadRequestException({
           message: 'Input Validation Is Failed',
-          errors: formattedValidationErrors,
+          errors: formatErrors(validationErrors),
         });
       },
     }),
     new CostumeValidationPipe(),
   );
 
-  await app.init();
-  console.log(`HTTP Application is running on: ${await app.getUrl()}`);
+  await app.init(); // Ganti listen dengan init()
+  return app.getHttpAdapter().getInstance();
 }
 void bootstrap();
