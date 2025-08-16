@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "serve": "npm run build && npm run prisma:migrate",
+    "serve": "npm run build && npm run prisma:generate",
     "prisma:migrate": "npx prisma migrate dev --schema ./src/common/database/prisma/schema.prisma",
     "prisma:generate": "npx prisma generate --schema ./src/common/database/prisma/schema.prisma",
     "build": "nest build",
